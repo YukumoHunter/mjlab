@@ -1,7 +1,6 @@
 from dataclasses import dataclass, replace
 
 from mjlab.asset_zoo.robots.booster_k1.k1_constants import (
-  K1_ACTION_SCALE,
   K1_ROBOT_CFG,
 )
 from mjlab.sensor import ContactMatch, ContactSensorCfg
@@ -45,9 +44,6 @@ class BoosterK1RoughEnvCfg(LocomotionVelocityEnvCfg):
       num_slots=1,
     )
     self.scene.sensors = (feet_ground_cfg, self_collision_cfg)
-
-    # Actions.
-    self.actions.joint_pos.scale = K1_ACTION_SCALE
 
     # Events.
     self.events.foot_friction.params["asset_cfg"].geom_names = geom_names

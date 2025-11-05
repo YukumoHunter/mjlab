@@ -93,8 +93,8 @@ FEET_ONLY_COLLISION = CollisionCfg(
 
 # Effort limits are retrieved from the k1_serial urdf. Stiffness and
 # damping values are taken from [`booster_gym`](https://github.com/BoosterRobotics/booster_gym/),
-# although stiffness is slightly tweaked, and based on the values for the Booster T1.
-# Armature is set to a small constant value based on the calculated values from the Unitree G1.
+# and based on the values for the Booster T1. Armature is set to a small
+# constant value based on the calculated values from the Unitree G1.
 
 DEFAULT_ARMATURE = 0.01
 
@@ -123,7 +123,7 @@ K1_ACTUATOR_3 = ActuatorCfg(
   ],
   effort_limit=30.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=100,
+  stiffness=200,
   damping=5,
 )
 
@@ -134,7 +134,7 @@ K1_ACTUATOR_4 = ActuatorCfg(
   ],
   effort_limit=20.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=100,
+  stiffness=200,
   damping=5,
 )
 
@@ -144,7 +144,7 @@ K1_ACTUATOR_5 = ActuatorCfg(
   ],
   effort_limit=40.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=100,
+  stiffness=200,
   damping=5,
 )
 
@@ -185,19 +185,6 @@ K1_ARTICULATION = EntityArticulationInfoCfg(
 ##
 # Final config.
 ##
-
-K1_ACTION_SCALE: dict[str, float] = {}
-for a in K1_ARTICULATION.actuators:
-  e = a.effort_limit
-  s = a.stiffness
-  names = a.joint_names_expr
-  if not isinstance(e, dict):
-    e = {n: e for n in names}
-  if not isinstance(s, dict):
-    s = {n: s for n in names}
-  for n in names:
-    if n in e and n in s and s[n]:
-      K1_ACTION_SCALE[n] = e[n] / s[n]
 
 K1_ROBOT_CFG = EntityCfg(
   init_state=HOME_KEYFRAME,
