@@ -12,7 +12,10 @@ We recommend Linux with an NVIDIA GPU for serious training workloads.
 
 ### Does it work on Windows?
 
-We have not tested on Windows. Community contributions for Windows support are welcome!
+We have performed preliminary testing on Windows and WSL, but some workflows
+are not guaranteed to be stable. Windows support may lag behind updates 
+and will be tested less frequently, as the primary platform targeted is Linux.
+However, community contributions for Windows support are welcome!
 
 ### CUDA Compatibility
 
@@ -114,6 +117,18 @@ videos directly in your experiment dashboard.
 Camera rendering for pixel-based agents is not yet available. The MuJoCo Warp
 team is actively developing camera support, which will integrate with mjlab once
 available.
+
+---
+
+## Development
+
+### Can I develop custom tasks in my own repository?
+
+Yes! mjlab has a plugin system that lets you develop tasks in separate
+repositories while seamlessly integrating with mjlab's `train` and `play`
+commands. See
+[Creating a New Task → External Package Registration](create_new_task.md#5-external-package-registration-optional)
+for a complete guide with a working example.
 
 ---
 
