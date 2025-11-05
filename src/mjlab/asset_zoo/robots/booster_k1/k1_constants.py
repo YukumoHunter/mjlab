@@ -102,7 +102,7 @@ K1_ACTUATOR_1 = ActuatorCfg(
   joint_names_expr=["Head_.*"],
   effort_limit=7.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=20,  # [N*m/rad]
+  stiffness=10,  # [N*m/rad]
   damping=0.2,  # [N*m*s/rad]
 )
 
@@ -113,7 +113,7 @@ K1_ACTUATOR_2 = ActuatorCfg(
   ],
   effort_limit=10.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=20,
+  stiffness=10,
   damping=0.5,
 )
 
@@ -123,7 +123,7 @@ K1_ACTUATOR_3 = ActuatorCfg(
   ],
   effort_limit=30.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=200,
+  stiffness=100,
   damping=5,
 )
 
@@ -134,7 +134,7 @@ K1_ACTUATOR_4 = ActuatorCfg(
   ],
   effort_limit=20.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=200,
+  stiffness=100,
   damping=5,
 )
 
@@ -144,7 +144,7 @@ K1_ACTUATOR_5 = ActuatorCfg(
   ],
   effort_limit=40.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=200,
+  stiffness=100,
   damping=5,
 )
 
@@ -154,7 +154,7 @@ K1_ACTUATOR_6 = ActuatorCfg(
   ],
   effort_limit=20.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=50,
+  stiffness=25,
   damping=3,
 )
 
@@ -164,7 +164,7 @@ K1_ACTUATOR_7 = ActuatorCfg(
   ],
   effort_limit=15.0,
   armature=DEFAULT_ARMATURE,
-  stiffness=50,
+  stiffness=25,
   damping=3,
 )
 
