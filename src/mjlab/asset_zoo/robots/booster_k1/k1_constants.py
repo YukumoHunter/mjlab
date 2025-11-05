@@ -6,8 +6,9 @@ import mujoco
 
 from mjlab import MJLAB_SRC_PATH
 from mjlab.entity import EntityCfg
+from mjlab.entity.entity import EntityArticulationInfoCfg
 from mjlab.utils.os import update_assets
-from mjlab.utils.spec_config import CollisionCfg
+from mjlab.utils.spec_config import ActuatorCfg, CollisionCfg
 
 ##
 # MJCF and assets.
@@ -30,6 +31,7 @@ def get_spec() -> mujoco.MjSpec:
   spec.assets = get_assets(spec.meshdir)
   return spec
 
+
 ##
 # Keyframe config.
 ##
@@ -47,7 +49,7 @@ HOME_KEYFRAME = EntityCfg.InitialStateCfg(
     "Right_Hip_Pitch": -0.2,
     "Right_Knee_Pitch": 0.4,
     "Right_Ankle_Pitch": -0.2,
-    },
+  },
   joint_vel={".*": 0.0},
 )
 
@@ -86,13 +88,122 @@ FEET_ONLY_COLLISION = CollisionCfg(
 )
 
 ##
+# Actuator config.
+##
+
+# Effort limits are retrieved from the k1_serial urdf. Stiffness and
+# damping values are taken from [`booster_gym`](https://github.com/BoosterRobotics/booster_gym/),
+# although stiffness is slightly tweaked, and based on the values for the Booster T1.
+# Armature is set to a small constant value based on the calculated values from the Unitree G1.
+
+DEFAULT_ARMATURE = 0.01
+
+K1_ACTUATOR_1 = ActuatorCfg(
+  joint_names_expr=["Head_.*"],
+  effort_limit=7.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=20,  # [N*m/rad]
+  damping=0.2,  # [N*m*s/rad]
+)
+
+K1_ACTUATOR_2 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Shoulder_.*",
+    ".*_Elbow_.*",
+  ],
+  effort_limit=10.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=20,
+  damping=0.5,
+)
+
+K1_ACTUATOR_3 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Hip_Pitch",
+  ],
+  effort_limit=30.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=100,
+  damping=5,
+)
+
+K1_ACTUATOR_4 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Hip_Roll",
+    ".*_Hip_Yaw",
+  ],
+  effort_limit=20.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=100,
+  damping=5,
+)
+
+K1_ACTUATOR_5 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Knee_Pitch",
+  ],
+  effort_limit=40.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=100,
+  damping=5,
+)
+
+K1_ACTUATOR_6 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Ankle_Pitch",
+  ],
+  effort_limit=20.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=50,
+  damping=3,
+)
+
+K1_ACTUATOR_7 = ActuatorCfg(
+  joint_names_expr=[
+    ".*_Ankle_Roll",
+  ],
+  effort_limit=15.0,
+  armature=DEFAULT_ARMATURE,
+  stiffness=50,
+  damping=3,
+)
+
+
+K1_ARTICULATION = EntityArticulationInfoCfg(
+  actuators=(
+    K1_ACTUATOR_1,
+    K1_ACTUATOR_2,
+    K1_ACTUATOR_3,
+    K1_ACTUATOR_4,
+    K1_ACTUATOR_5,
+    K1_ACTUATOR_6,
+    K1_ACTUATOR_7,
+  ),
+  soft_joint_pos_limit_factor=0.9,
+)
+
+##
 # Final config.
 ##
+
+K1_ACTION_SCALE: dict[str, float] = {}
+for a in K1_ARTICULATION.actuators:
+  e = a.effort_limit
+  s = a.stiffness
+  names = a.joint_names_expr
+  if not isinstance(e, dict):
+    e = {n: e for n in names}
+  if not isinstance(s, dict):
+    s = {n: s for n in names}
+  for n in names:
+    if n in e and n in s and s[n]:
+      K1_ACTION_SCALE[n] = e[n] / s[n]
 
 K1_ROBOT_CFG = EntityCfg(
   init_state=HOME_KEYFRAME,
   collisions=(FULL_COLLISION,),
   spec_fn=get_spec,
+  articulation=K1_ARTICULATION,
 )
 
 

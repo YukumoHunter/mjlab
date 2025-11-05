@@ -1,6 +1,7 @@
 from dataclasses import dataclass, replace
 
 from mjlab.asset_zoo.robots.booster_k1.k1_constants import (
+  K1_ACTION_SCALE,
   K1_ROBOT_CFG,
 )
 from mjlab.sensor import ContactMatch, ContactSensorCfg
@@ -45,6 +46,9 @@ class BoosterK1RoughEnvCfg(LocomotionVelocityEnvCfg):
     )
     self.scene.sensors = (feet_ground_cfg, self_collision_cfg)
 
+    # Actions.
+    self.actions.joint_pos.scale = K1_ACTION_SCALE
+
     # Events.
     self.events.foot_friction.params["asset_cfg"].geom_names = geom_names
 
@@ -55,7 +59,7 @@ class BoosterK1RoughEnvCfg(LocomotionVelocityEnvCfg):
     # Moderate leg freedom for stepping, loose arms for natural pendulum swing.
     self.rewards.pose.params["std_walking"] = {
       # Head
-      r".*Head.*": 0.1,
+      r".*Head.*": 0.05,
       # Lower body.
       r".*Hip_Pitch.*": 0.3,
       r".*Hip_Roll.*": 0.15,
@@ -71,7 +75,7 @@ class BoosterK1RoughEnvCfg(LocomotionVelocityEnvCfg):
     # Maximum freedom for dynamic motion.
     self.rewards.pose.params["std_running"] = {
       # Head
-      r".*Head.*": 0.1,
+      r".*Head.*": 0.05,
       # Lower body.
       r".*Hip_Pitch.*": 0.5,
       r".*Hip_Roll.*": 0.2,
