@@ -262,31 +262,6 @@
     <subtreeangmom name="root_angmom" body="Trunk"/>
   </sensor>
 
-  <actuator>
-    <position class="k1" name="Head_Yaw" joint="Head_Yaw" />
-    <position class="k1" name="Head_Pitch" joint="Head_Pitch" />
-    <position class="k1" name="Left_Shoulder_Pitch" joint="Left_Shoulder_Pitch" />
-    <position class="k1" name="Left_Shoulder_Roll" joint="Left_Shoulder_Roll" />
-    <position class="k1" name="Left_Elbow_Pitch" joint="Left_Elbow_Pitch" />
-    <position class="k1" name="Left_Elbow_Yaw" joint="Left_Elbow_Yaw" />
-    <position class="k1" name="Right_Shoulder_Pitch" joint="Right_Shoulder_Pitch" />
-    <position class="k1" name="Right_Shoulder_Roll" joint="Right_Shoulder_Roll" />
-    <position class="k1" name="Right_Elbow_Pitch" joint="Right_Elbow_Pitch" />
-    <position class="k1" name="Right_Elbow_Yaw" joint="Right_Elbow_Yaw" />
-    <position class="k1" name="Left_Hip_Pitch" joint="Left_Hip_Pitch" />
-    <position class="k1" name="Left_Hip_Roll" joint="Left_Hip_Roll" />
-    <position class="k1" name="Left_Hip_Yaw" joint="Left_Hip_Yaw" />
-    <position class="k1" name="Left_Knee_Pitch" joint="Left_Knee_Pitch" />
-    <position class="k1" name="Left_Ankle_Pitch" joint="Left_Ankle_Pitch" />
-    <position class="k1" name="Left_Ankle_Roll" joint="Left_Ankle_Roll" />
-    <position class="k1" name="Right_Hip_Pitch" joint="Right_Hip_Pitch" />
-    <position class="k1" name="Right_Hip_Roll" joint="Right_Hip_Roll" />
-    <position class="k1" name="Right_Hip_Yaw" joint="Right_Hip_Yaw" />
-    <position class="k1" name="Right_Knee_Pitch" joint="Right_Knee_Pitch" />
-    <position class="k1" name="Right_Ankle_Pitch" joint="Right_Ankle_Pitch" />
-    <position class="k1" name="Right_Ankle_Roll" joint="Right_Ankle_Roll" />
-  </actuator>
-
   <keyframe>
     <key name="home"
         qpos="
